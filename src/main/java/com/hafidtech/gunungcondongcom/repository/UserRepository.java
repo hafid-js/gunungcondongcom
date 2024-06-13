@@ -1,6 +1,8 @@
 package com.hafidtech.gunungcondongcom.repository;
 
+import com.hafidtech.gunungcondongcom.exception.ResourceNotFoundException;
 import com.hafidtech.gunungcondongcom.model.user.User;
+import com.hafidtech.gunungcondongcom.security.UserPrincipal;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +21,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsernameOrEmail(String username, String email);
 
-    default User getUser(UserPrinci)
+    default User getUser(UserPrincipal currentUser) {
+        return getUserByName(currentUser.getUsername());
+    }
+
+    default User getUserByName(String username) {
+        return findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+    }
 }

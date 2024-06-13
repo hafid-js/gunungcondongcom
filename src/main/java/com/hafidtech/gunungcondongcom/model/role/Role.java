@@ -1,10 +1,9 @@
 package com.hafidtech.gunungcondongcom.model.role;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
-
-import javax.persistence.*;
 
 @Entity
 @Data
