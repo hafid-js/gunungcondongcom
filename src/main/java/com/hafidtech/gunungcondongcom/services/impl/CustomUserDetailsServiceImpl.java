@@ -4,7 +4,7 @@ package com.hafidtech.gunungcondongcom.services.impl;
 import com.hafidtech.gunungcondongcom.model.user.User;
 import com.hafidtech.gunungcondongcom.repository.UserRepository;
 import com.hafidtech.gunungcondongcom.security.UserPrincipal;
-import com.hafidtech.gunungcondongcom.services.CustomUserDerailsService;
+import com.hafidtech.gunungcondongcom.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CustomUserDetailsServiceImpl implements UserDetailsService, CustomUserDerailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService, CustomUserDetailsService {
 
     @Autowired
     private UserRepository userRepository;

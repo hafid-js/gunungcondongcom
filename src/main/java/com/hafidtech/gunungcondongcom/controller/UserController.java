@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<UserSummary> getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = userService.getCurrentUser(currentUser);
 
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> addUSer(@Valid @RequestBody User user) {
         User newUser = userService.addUser(user);
 
@@ -42,8 +42,8 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<User> updateUSer(@Valid @RequestBody User newUser,
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User newUser,
                                            @PathVariable(value = "username") String username,
                                            @CurrentUser UserPrincipal currentUser) {
         User updateUser = userService.updateUser(newUser, username, currentUser);
@@ -52,8 +52,8 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/{username")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @DeleteMapping("/{username}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable(value = "username") String username, @CurrentUser UserPrincipal currentUser) {
         ApiResponse apiResponse = userService.deleteUser(username, currentUser);
 
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}/giveAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(name = "username") String username) {
         ApiResponse apiResponse = userService.giveAdmin(username);
 
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}/takeAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> takeAdmin(@PathVariable(name = "username") String username) {
         ApiResponse apiResponse = userService.removeAdmin(username);
 
@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @PutMapping("/setOrUpdateInfo")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserProfile> setAddress(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody InfoRequest infoRequest) {
         UserProfile userProfile = userService.setOrUpdateInfo(currentUser, infoRequest);
 

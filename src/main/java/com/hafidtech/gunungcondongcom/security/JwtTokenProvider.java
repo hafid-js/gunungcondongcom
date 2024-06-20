@@ -1,7 +1,6 @@
 package com.hafidtech.gunungcondongcom.security;
 
 import io.jsonwebtoken.*;
-import jakarta.mail.internet.MailDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +40,7 @@ public class JwtTokenProvider {
                 .getBody();
 
         return Long.valueOf(claims.getSubject());
+
     }
 
     public boolean validateToken(String authToken) {

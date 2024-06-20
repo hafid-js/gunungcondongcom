@@ -1,7 +1,7 @@
 package com.hafidtech.gunungcondongcom.services.impl;
 
 import com.hafidtech.gunungcondongcom.exception.*;
-import com.hafidtech.gunungcondongcom.model.Role;
+import com.hafidtech.gunungcondongcom.model.role.Role;
 import com.hafidtech.gunungcondongcom.model.role.RoleName;
 import com.hafidtech.gunungcondongcom.model.user.Address;
 import com.hafidtech.gunungcondongcom.model.user.Geo;
@@ -9,7 +9,6 @@ import com.hafidtech.gunungcondongcom.model.user.User;
 import com.hafidtech.gunungcondongcom.payload.*;
 import com.hafidtech.gunungcondongcom.repository.RoleRepository;
 import com.hafidtech.gunungcondongcom.repository.UserRepository;
-import com.hafidtech.gunungcondongcom.security.CurrentUser;
 import com.hafidtech.gunungcondongcom.security.UserPrincipal;
 import com.hafidtech.gunungcondongcom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +39,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserIdentityAvailability checkUsernameAvailability(String username) {
-        Boolean isAvailable = !userRepository.existingByUsername(username);
+        Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
     @Override
     public UserIdentityAvailability checkEmailAvailability(String email) {
-        Boolean isAvailable = !userRepository.existingByEmail(email);
+        Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
 
@@ -67,11 +66,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
-        if (userRepository.existingByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
             throw new BadRequestException(apiResponse);
         }
-        if (userRepository.existingByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Email is already taken");
             throw new BadRequestException(apiResponse);
         }

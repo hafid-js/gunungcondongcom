@@ -1,8 +1,8 @@
 package com.hafidtech.gunungcondongcom.model.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hafidtech.gunungcondongcom.model.Role;
 import com.hafidtech.gunungcondongcom.model.audit.DateAudit;
+import com.hafidtech.gunungcondongcom.model.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -68,11 +68,7 @@ public class User extends DateAudit {
     private String phone;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id",
-            referencedColumnName = "id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
 
