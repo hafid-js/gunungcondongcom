@@ -47,17 +47,17 @@ public class User extends DateAudit {
     private String username;
 
     @NotBlank
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Size(max = 100)
-    @Column(name = "password")
-    private String password;
-
-    @NotBlank
     @NaturalId
     @Size(max = 40)
     @Column(name = "email")
     @Email
     private String email;
+
+    @NotBlank
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Size(max = 100)
+    @Column(name = "password")
+    private String password;
 
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -72,12 +72,12 @@ public class User extends DateAudit {
     private List<Role> roles;
 
 
-    public User(String firstName, String lastName, String username, String password, String email) {
+    public User(String firstName, String lastName, String username, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
         this.email = email;
+        this.password = password;
     }
 
     public List<Role> getRoles() {

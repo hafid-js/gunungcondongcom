@@ -33,9 +33,15 @@ public class UserController {
         return new ResponseEntity<>(userIdentityAvailability, HttpStatus.OK);
     }
 
+    @GetMapping("/checkEmailAvailability")
+    public ResponseEntity<UserIdentityAvailability> checkEmailAvailability(@RequestParam(value = "email") String email) {
+        UserIdentityAvailability userIdentityAvailability = userService.checkEmailAvailability(email);
+        return new ResponseEntity< >(userIdentityAvailability, HttpStatus.OK);
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<User> addUSer(@Valid @RequestBody User user) {
+    public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         User newUser = userService.addUser(user);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
@@ -62,7 +68,7 @@ public class UserController {
 
     @PutMapping("/{username}/giveAdmin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(name = "username") String username) {
+    public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(value = "username") String username) {
         ApiResponse apiResponse = userService.giveAdmin(username);
 
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -70,7 +76,7 @@ public class UserController {
 
     @PutMapping("/{username}/takeAdmin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse> takeAdmin(@PathVariable(name = "username") String username) {
+    public ResponseEntity<ApiResponse> takeAdmin(@PathVariable(value = "username") String username) {
         ApiResponse apiResponse = userService.removeAdmin(username);
 
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
