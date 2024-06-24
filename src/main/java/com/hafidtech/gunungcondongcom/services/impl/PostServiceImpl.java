@@ -125,7 +125,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse delete(Long id, UserPrincipal currentUser) {
+    public ApiResponse deletePost(Long id, UserPrincipal currentUser) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(POST, ID, id));
         if (post.getUser().getId().equals(currentUser.getId()) || currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
             postRepository.deleteById(id);

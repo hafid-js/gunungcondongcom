@@ -20,7 +20,7 @@ public interface PostService {
 
     Post updatePost(Long id, PostRequest newPostRequest, UserPrincipal currentUser);
 
-    ApiResponse delete(Long id, UserPrincipal currentUser);
+    ApiResponse deletePost(Long id, UserPrincipal currentUser);
 
     PostResponse addPost(PostRequest postRequest, UserPrincipal currentUser);
 
