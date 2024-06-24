@@ -57,22 +57,22 @@ public class Address extends UserDateAudit {
     }
 
     @Override
-    public Instant getCreatedAt() {
+    public Long getCreatedAt() {
         return super.getCreatedAt();
     }
 
     @Override
-    public Instant getUpdatedAt() {
+    public Long getUpdatedAt() {
         return super.getUpdatedAt();
     }
 
     @Override
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Long createdAt) {
         super.setCreatedAt(createdAt);
     }
 
     @Override
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         super.setUpdatedAt(updatedAt);
     }
 

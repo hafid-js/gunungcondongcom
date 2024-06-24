@@ -39,8 +39,14 @@ public class UserController {
         return new ResponseEntity< >(userIdentityAvailability, HttpStatus.OK);
     }
 
+    @GetMapping("/{username}/profile")
+    public ResponseEntity<UserProfile> getUserProfile(@PathVariable(value = "username") String username) {
+        UserProfile userProfile = userService.getUserProfile(username);
+
+        return new ResponseEntity< >(userProfile, HttpStatus.OK);
+    }
+
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         User newUser = userService.addUser(user);
 
@@ -66,7 +72,7 @@ public class UserController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/{username}/giveAdmin")
+    @PutMapping("/{username}/giveadmin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(value = "username") String username) {
         ApiResponse apiResponse = userService.giveAdmin(username);
@@ -74,7 +80,7 @@ public class UserController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/{username}/takeAdmin")
+    @PutMapping("/{username}/takeadmin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> takeAdmin(@PathVariable(value = "username") String username) {
         ApiResponse apiResponse = userService.removeAdmin(username);

@@ -27,6 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     default User getUserByName(String username) {
         return findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+                .orElseThrow(() -> new ResourceNotFoundException("User  ", "username", username));
     }
 }

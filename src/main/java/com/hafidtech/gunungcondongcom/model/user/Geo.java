@@ -38,25 +38,25 @@ public class Geo extends UserDateAudit {
 
     @JsonIgnore
     @Override
-    public Instant getCreatedAt() {
+    public Long getCreatedAt() {
         return super.getCreatedAt();
     }
 
     @JsonIgnore
     @Override
-    public Instant getUpdatedAt() {
+    public Long getUpdatedAt() {
         return super.getUpdatedAt();
     }
 
     @JsonIgnore
     @Override
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Long createdAt) {
         super.setCreatedAt(createdAt);
     }
 
     @JsonIgnore
     @Override
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         super.setUpdatedAt(updatedAt);
     }
 
