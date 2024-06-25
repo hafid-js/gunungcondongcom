@@ -1,6 +1,7 @@
 package com.hafidtech.gunungcondongcom.controller;
 
 import com.hafidtech.gunungcondongcom.model.Category;
+import com.hafidtech.gunungcondongcom.payload.ApiResponse;
 import com.hafidtech.gunungcondongcom.payload.PagedResponse;
 import com.hafidtech.gunungcondongcom.security.CurrentUser;
 import com.hafidtech.gunungcondongcom.security.UserPrincipal;
@@ -33,4 +34,32 @@ public class CategoryController {
 
         return categoryService.addCategory(category, currentUser);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategory(
+            @PathVariable(name = "id") Long id){
+        return categoryService.getCategory(id);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<Category> updateCategory(
+            @PathVariable(name = "id") Long id,
+            @Valid
+            @RequestBody Category category,
+            @CurrentUser UserPrincipal currentUser) {
+        return categoryService.updateCategory(id, category, currentUser);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> deleteCategory(
+            @PathVariable(name = "id") Long id,
+            @CurrentUser UserPrincipal currentUser) {
+        return categoryService.deleteCategory(id, currentUser);
+    }
+
+
+
+
 }
