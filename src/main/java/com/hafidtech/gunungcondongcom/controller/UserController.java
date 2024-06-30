@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserSummary> getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = userService.getCurrentUser(currentUser);
 
@@ -43,12 +43,12 @@ public class UserController {
     public ResponseEntity<UserProfile> getUserProfile(@PathVariable(value = "username") String username) {
         UserProfile userProfile = userService.getUserProfile(username);
 
-        return new ResponseEntity< >(userProfile, HttpStatus.OK);
+        return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
-        User newUser = userService.addUser(user);
+    public ResponseEntity<Object> addUser(@Valid @RequestBody User user) {
+        Object newUser = userService.addUser(user);
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
@@ -72,7 +72,7 @@ public class UserController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/{username}/giveadmin")
+    @PutMapping("/giveadmin/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(value = "username") String username) {
         ApiResponse apiResponse = userService.giveAdmin(username);

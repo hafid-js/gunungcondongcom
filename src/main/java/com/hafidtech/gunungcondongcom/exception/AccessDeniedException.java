@@ -9,9 +9,9 @@ public class AccessDeniedException  extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
-    private ApiResponse apiResponse;
+    public ApiResponse apiResponse;
 
-    private String message;
+    public String message;
 
     public AccessDeniedException(ApiResponse apiResponse) {
         super();

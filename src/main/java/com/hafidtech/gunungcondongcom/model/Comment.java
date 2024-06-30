@@ -11,8 +11,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @Table(name = "comments")

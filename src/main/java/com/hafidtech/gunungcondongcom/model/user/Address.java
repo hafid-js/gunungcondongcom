@@ -16,7 +16,7 @@ import java.time.Instant;
 @Table(name = "address")
 public class Address extends UserDateAudit {
 
-    private static final Long serialVersionId = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +40,16 @@ public class Address extends UserDateAudit {
 
     @OneToOne(mappedBy = "address")
     private User user;
+
+//    @OneToOne(mappedBy="address",
+//            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+//                    CascadeType.REFRESH})
+//    private User user;
+
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
 
     public Address(String street, String suite, String city, String zipcode, Geo geo) {

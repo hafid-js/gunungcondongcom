@@ -1,6 +1,8 @@
 package com.hafidtech.gunungcondongcom.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hafidtech.gunungcondongcom.model.role.Role;
+import com.hafidtech.gunungcondongcom.model.role.RoleName;
 import com.hafidtech.gunungcondongcom.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,6 +33,9 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
+
+//    private List<Role> roles;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(Long id, String firstName, String lastName, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -40,6 +45,7 @@ public class UserPrincipal implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
+//        this.roles = roles;
 
         if (authorities == null) {
             this.authorities = null;
@@ -59,6 +65,7 @@ public class UserPrincipal implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+//                user.getRoles(),
                 authorities);
     }
 
@@ -69,6 +76,10 @@ public class UserPrincipal implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+//    public List<Role> roles() {
+//        return roles;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

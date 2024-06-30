@@ -5,6 +5,8 @@ import com.hafidtech.gunungcondongcom.model.user.User;
 import com.hafidtech.gunungcondongcom.security.UserPrincipal;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -27,6 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     default User getUserByName(String username) {
         return findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User  ", "username", username));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
     }
+    @Query(value = "delete from user_role where user_id = ?1",
+            nativeQuery = true)
+    Long deleteUserRoleByUserId(Long userId);
 }

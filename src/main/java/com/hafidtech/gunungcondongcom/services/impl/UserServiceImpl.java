@@ -13,12 +13,15 @@ import com.hafidtech.gunungcondongcom.security.UserPrincipal;
 import com.hafidtech.gunungcondongcom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -76,7 +79,7 @@ public class UserServiceImpl implements UserService {
         }
 
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
+        roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User role not set")));
         user.setRoles(roles);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -103,11 +106,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse deleteUser(String username, UserPrincipal currentUser) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "id", username));
-        if(!user.getId().equals(currentUser.getId()) || !currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
-            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete profile of: " + username);
-            throw new AccessDeniedException(apiResponse);
-        }
+//        if(!user.getId().equals(currentUser.getId()) || !currentUser.getAuthorities()
+//                .contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 
+        if(!user.getId().equals(currentUser.getId()) ) {
+
+            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete profile : " + username);
+            return new AccessDeniedException(apiResponse).getApiResponse();
+        }
         userRepository.deleteById(user.getId());
 
         return new ApiResponse(Boolean.TRUE, "You successfully deleted profile of: " + username);
@@ -115,13 +121,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse giveAdmin(String username) {
-        User user = userRepository.getUserByName(username);
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User role not set")));
-        roles.add(roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
-        user.setRoles(roles);
-        userRepository.save(user);
-        return new ApiResponse(Boolean.TRUE, "You gave ADMIN role to user: " + username);
+            User user = userRepository.getUserByName(username);
+            List<Role> roles = new ArrayList<>();
+            roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User role not set")));
+            roles.add(roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
+            user.setRoles(roles);
+            userRepository.save(user);
+
+         return new ApiResponse(Boolean.TRUE, "You gave ADMIN role to user: " + username);
+
     }
 
     @Override
