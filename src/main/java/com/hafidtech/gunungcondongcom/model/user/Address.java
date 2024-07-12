@@ -8,10 +8,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
 @NoArgsConstructor
 @Table(name = "address")
 public class Address extends UserDateAudit {
@@ -39,17 +39,8 @@ public class Address extends UserDateAudit {
     private Geo geo;
 
     @OneToOne(mappedBy = "address")
+    @JsonIgnore
     private User user;
-
-//    @OneToOne(mappedBy="address",
-//            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-//                    CascadeType.REFRESH})
-//    private User user;
-
-//    @OneToOne
-//    @MapsId
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
 
     public Address(String street, String suite, String city, String zipcode, Geo geo) {
@@ -60,49 +51,59 @@ public class Address extends UserDateAudit {
         this.geo = geo;
     }
 
-
-    @JsonIgnore
     public Long getId() {
         return id;
     }
 
-    @Override
-    public Long getCreatedAt() {
-        return super.getCreatedAt();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public Long getUpdatedAt() {
-        return super.getUpdatedAt();
+    public String getStreet() {
+        return street;
     }
 
-    @Override
-    public void setCreatedAt(Long createdAt) {
-        super.setCreatedAt(createdAt);
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    @Override
-    public void setUpdatedAt(Long updatedAt) {
-        super.setUpdatedAt(updatedAt);
+    public String getSuite() {
+        return suite;
     }
 
-    @Override
-    public Long getCreatedBy() {
-        return super.getCreatedBy();
+    public void setSuite(String suite) {
+        this.suite = suite;
     }
 
-    @Override
-    public Long getUpdatedBy() {
-        return super.getUpdatedBy();
+    public String getCity() {
+        return city;
     }
 
-    @Override
-    public void setCreatedBy(Long createdBy) {
-        super.setCreatedBy(createdBy);
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    @Override
-    public void setUpdatedBy(Long updatedBy) {
-        super.setUpdatedBy(updatedBy);
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public Geo getGeo() {
+        return geo;
+    }
+
+    public void setGeo(Geo geo) {
+        this.geo = geo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

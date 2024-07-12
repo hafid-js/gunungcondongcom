@@ -19,7 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,6 +97,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(newUser.getPassword()));
             user.setAddress(newUser.getAddress());
             user.setPhone(newUser.getPhone());
+
 
             return userRepository.save(user);
 

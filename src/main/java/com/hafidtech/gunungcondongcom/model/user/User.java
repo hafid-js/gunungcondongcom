@@ -1,5 +1,6 @@
 package com.hafidtech.gunungcondongcom.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hafidtech.gunungcondongcom.model.audit.DateAudit;
 import com.hafidtech.gunungcondongcom.model.role.Role;
@@ -62,6 +63,7 @@ public class User extends DateAudit {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id")
+    @JsonIgnore
     private Address address;
 
     @Column(name = "phone")

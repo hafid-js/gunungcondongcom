@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -29,6 +30,7 @@ public class Geo extends UserDateAudit {
     private String lng;
 
     @OneToOne(mappedBy = "geo")
+    @JsonIgnore
     private Address address;
 
     public Geo(String lat, String lng) {
@@ -38,25 +40,25 @@ public class Geo extends UserDateAudit {
 
     @JsonIgnore
     @Override
-    public Long getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return super.getCreatedAt();
     }
 
     @JsonIgnore
     @Override
-    public Long getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return super.getUpdatedAt();
     }
 
     @JsonIgnore
     @Override
-    public void setCreatedAt(Long createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         super.setCreatedAt(createdAt);
     }
 
     @JsonIgnore
     @Override
-    public void setUpdatedAt(Long updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         super.setUpdatedAt(updatedAt);
     }
 

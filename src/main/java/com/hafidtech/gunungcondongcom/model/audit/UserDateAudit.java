@@ -6,6 +6,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,6 +23,7 @@ public abstract class UserDateAudit extends  DateAudit{
     @Column(updatable = false)
     private Long createdBy;
 
-    @LastModifiedDate
+    @LastModifiedBy
     private Long updatedBy;
+
 }
